@@ -1,1 +1,1 @@
-# case-guardian
+# Case Guardian MPC (Management of Personal Credit)
