@@ -11,7 +11,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "89@j=*y-4n^^ee*%!xsbmqcsq-s49te4o%-(0=8@8=ixf!2jj("
 
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
@@ -46,7 +46,7 @@ WSGI_APPLICATION = "mpc_core.wsgi.application"
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR/"mpc_database/db.sqlite3",
+        "NAME": "mpc_database/db.sqlite3",
     }
 }
 

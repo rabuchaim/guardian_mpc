@@ -4,7 +4,7 @@ class Contract(models.Model):
     contract_id = models.BigAutoField(primary_key=True)
     contract_date = models.DateField()
     contract_amount = models.DecimalField(max_digits=11,decimal_places=2)
-    contract_rate = models.FloatField(max_length=3)
+    contract_rate = models.FloatField()
     customer_cpf = models.CharField(max_length=14) # 14 para aceitar com pontos e traços (será filtrado)
     customer_birth_date = models.DateField()
     # customer_address = models.CharField(max_length=255)
