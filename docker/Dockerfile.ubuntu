@@ -23,8 +23,9 @@ RUN set -ex \
 
 ADD guardian-mpc-files.tar.gz /
 
-RUN python3 /server/manage.py makemigrations \
-    && python3 /server/manage.py migrate
+RUN cd /server \
+    && python3 manage.py makemigrations mpc_contracts \
+    && python3 manage.py migrate
 
 ENV DJANGO_SETTINGS_MODULE="mpc_core.settings"
 
