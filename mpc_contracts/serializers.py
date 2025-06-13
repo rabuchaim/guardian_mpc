@@ -37,8 +37,8 @@ class ContractSerializer(serializers.ModelSerializer):
 
         if validated_data['contract_amount'] <= 0:
             raise serializers.ValidationError("Contract amount must be greater than zero.")
-        if validated_data['contract_rate'] < 0:
-            raise serializers.ValidationError("Contract rate must be zero or positive.")
+        if validated_data['contract_rate'] < 1:
+            raise serializers.ValidationError("Contract rate must be greater than or equal to 1.")
 
         if not data_parcels:
             raise serializers.ValidationError("At least one parcel must be provided.")
