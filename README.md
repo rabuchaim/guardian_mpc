@@ -73,13 +73,203 @@ Destroying test database for alias 'default'...
 
 ### **Criação de Contrato**: `POST` `/contracts/create/`
 
-Cria um novo contrato. Aceita envio em massa.
+Cria um novo contrato. Aceita envio em massa. Existem validações em todos os campos e requer atenção para a [validação das parcelas](#soma-das-parcelas).
+
+Exemplo de json para um único contrato:
+```json
+{
+   "contract_date": "2025-06-09",
+   "contract_amount": 2000,
+   "contract_rate": 1.5,
+   "customer_cpf": "563.768.820-64",
+   "customer_birth_date": "1976-10-26",
+   "customer_country": "Brasil",
+   "customer_state": "SP",
+   "customer_city": "São Paulo",
+   "customer_phone": "16997228598",
+   "parcels": [
+      {
+         "parcel_number": 1,
+         "parcel_amount": 600.0,
+         "parcel_due_date": "2025-07-09"
+      },
+      {...},
+      {
+         "parcel_number": 5,
+         "parcel_amount": 600.0,
+         "parcel_due_date": "2025-11-09"
+      }
+   ]
+}
+```
+
+Exemplo de json para 2 ou mais contratos:
+```json
+[
+    {
+        "contract_date": "2025-06-09",
+        "contract_amount": 2000,
+        "contract_rate": 1.5,
+        "customer_cpf": "563.768.820-64",
+        "customer_birth_date": "1976-10-26",
+        "customer_country": "Brasil",
+        "customer_state": "SP",
+        "customer_city": "São Paulo",
+        "customer_phone": "16997228598",
+        "parcels": [
+            {
+                "parcel_number": 1,
+                "parcel_amount": 600,
+                "parcel_due_date": "2025-07-09"
+            },
+            {...},    
+            {
+                "parcel_number": 5,
+                "parcel_amount": 600,
+                "parcel_due_date": "2025-11-09"
+            }
+        ]
+    },
+    {
+        "contract_date": "2025-06-10",
+        "contract_amount": 2000,
+        "contract_rate": 1.5,
+        "customer_cpf": "563.768.820-64",
+        "customer_birth_date": "1976-10-26",
+        "customer_country": "Brasil",
+        "customer_state": "SP",
+        "customer_city": "São Paulo",
+        "customer_phone": "16997228598",
+        "parcels": [
+            {
+                "parcel_number": 1,
+                "parcel_amount": 600,
+                "parcel_due_date": "2025-07-10"
+            },
+            {...},
+            {
+                "parcel_number": 5,
+                "parcel_amount": 600,
+                "parcel_due_date": "2025-11-10"
+            }
+        ]
+    }
+]
+```
+Comando curl para testes de criação de contrato:
+```bash
+curl -v -X POST http://127.0.0.1:8000/contracts/create/ -H "Content-Type: application/json" -d '{"contract_date":"2023-01-15","contract_amount":20000,"contract_rate":2.3,"customer_cpf":"24926156857","customer_birth_date":"1990-01-01","customer_country":"Brasil","customer_state":"SP","customer_city":"São Paulo","customer_phone":"16997228598","parcels":[{"parcel_due_date":"2025-08-01","parcel_amount":11500},{"parcel_due_date":"2025-09-01","parcel_amount":11500},{"parcel_due_date":"2025-10-01","parcel_amount":11500},{"parcel_due_date":"2025-11-01","parcel_amount":11500}]}'
+```
 
 ### **Listagem de todos os contratos**: `GET` `/contracts/list/all`
-
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/all" | jq
+[
+  {
+    "contract_id": 1,
+    "contract_date": "2023-01-15",
+    "contract_amount": "20000.00",
+    "contract_rate": 2.3,
+    "customer_cpf": "24926156857",
+    "customer_birth_date": "1990-01-01",
+    "customer_city": "São Paulo",
+    "customer_state": "SP",
+    "customer_country": "Brasil",
+    "customer_phone": "16997228598"
+  },
+  {
+    "contract_id": 2,
+    "contract_date": "2023-01-15",
+    "contract_amount": "20000.00",
+    "contract_rate": 2.3,
+    "customer_cpf": "24926156857",
+    "customer_birth_date": "1990-01-01",
+    "customer_city": "São Paulo",
+    "customer_state": "SP",
+    "customer_country": "Brasil",
+    "customer_phone": "16997228598"
+  }
+]
+```
 
 ### **Listagem de contratos com filtro**: `GET` `/contracts/list/`
 
+Os filtros podem ser por `contract_id`, `contract_date`, `customer_cpf`, `customer_state` ou todos eles combinados.
+
+    "http://127.0.0.1:8000/contracts/list/?customer_cpf=285.281930-98&customer_state=SP&contract_date=2025"
+
+- Por `customer_cpf`: É necessário um CPF válido e pode-se usar pontos ou traços que serão descartados antes de inserir no banco de dados.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?customer_cpf=285.281930-98" | jq
+[
+  {
+    "contract_id": 3,
+    "contract_date": "2025-07-01",
+    "contract_amount": "20000.00",
+    "contract_rate": 1.3,
+    "customer_cpf": "28528193098",
+    "customer_birth_date": "1990-01-01",
+    "customer_city": "Manaus",
+    "customer_state": "AM",
+    "customer_country": "Brasil",
+    "customer_phone": "16997228598"
+  }
+]
+```
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?customer_cpf=12345678910" | jq
+[
+  "Invalid customer_cpf provided: 12345678910"
+]
+```
+- Por `customer_state`: É necessário uma sigla de estado brasileiro válido. Aceita minúsculas ou maiúsculas.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?customer_state=SC" | jq
+[
+  {
+    "contract_id": 4,
+    "contract_date": "2025-07-01",
+    "contract_amount": "20000.00",
+    "contract_rate": 1.3,
+    "customer_cpf": "28528193098",
+    "customer_birth_date": "1990-01-01",
+    "customer_city": "Florianopolis",
+    "customer_state": "SC",
+    "customer_country": "Brasil",
+    "customer_phone": "16997228598"
+  }
+]
+```
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?customer_state=XX" | jq
+[
+  "Invalid customer_state code: XX. Must be one of 'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'"
+]
+```
+- Por `contract_date`: Aceita datas nos formatos `YYYY`, `YYYY-MM`, ou `YYYY-MM-DD`.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?contract_date=2023" | jq
+[
+  {
+    "contract_id": 1,
+    "contract_date": "2023-01-15",
+    "contract_amount": "20000.00",
+    "contract_rate": 2.3,
+    "customer_cpf": "24926156857",
+    "customer_birth_date": "1990-01-01",
+    "customer_city": "São Paulo",
+    "customer_state": "SP",
+    "customer_country": "Brasil",
+    "customer_phone": "16997228598"
+  }
+]
+```
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list/?contract_date=222" | jq
+[
+  "Invalid contract_date format: 222. Expected formats: YYYY, YYYY-MM, or YYYY-MM-DD."
+]
+```
 
 ### **Resumo consolidado dos contratos (com filtro)**: `GET` `/contracts/summary/`
 
