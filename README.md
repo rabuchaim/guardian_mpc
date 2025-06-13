@@ -5,29 +5,53 @@ Clone o repositório em um diretório de sua preferência:
 ```
 git clone https://github.com/rabuchaim/guardian_mpc.git
 ```
+---
 Entre no diretório do código recém clonado:
 ```
 cd guardian_mpc
 ```
+---
 Crie um ambiente virtual do Python3:
 ```
 python3 -m venv python-venv
 ```
 > Se ocorrer algum erro na criação do ambiente virtual você deve instalar o pacote python3-venv do seu sistema operacional com `apt install python3-venv` ou `yum install python3-venv`
-
+---
 Ative o ambiente virtual:
 ```
 source python-venv/bin/activate
 ```
+---
 Instale as bibliotecas necessárias:
 ```
 pip install -r requirements.txt
 ```
+---
 Execute o makemigrations e depois o migrate:
 ```
 ./manage.py makemigrations mpc_contracts
 ./manage.py migrate
 ```
+---
+Ajuste as variáveis **`API_PREFIX`** e/ou **`HC_PREFIX`** que são prefixos que serão adicionados no início das rotas. Caso seja necessário alterar o conjunto inteiro de rotas devido a uma exposição/acesso indesejado das  rotas padrão ou até mesmo conflitos com outras APIs em um API Gateway (por exemplo), o sysadmin pode trocar a URL de toda a API rapidamente no arquivo `mpc_core/settings.py`. **Por padrão essas variáveis estão vazias**.
+
+```bash
+grep PREFIX mpc_core/settings.py
+
+API_PREFIX = ""
+HC_PREFIX = ""
+```
+O `API_PREFIX` pode ser `"api/v1/"` se quiser iniciar as rotas com esse texto, ficando da seguinte forma:
+
+    http://127.0.0.1:8000/api/v1/contracts/list/all
+
+Já o `HC_PREFIX` é um prefixo para as rotas de [Health-Check](#healthcheck-para-o-load-balancer-get-hc). Se adicionar o prefixo `"internal/"`, o acesso ficará da seguinte forma:
+
+    http://127.0.0.1:8000/internal/hc/
+
+
+---
+
 Execute os testes da aplicação para verificar se está tudo instalado corretamente:
 ```
 ./manage.py test
@@ -69,6 +93,31 @@ OK
 Destroying test database for alias 'default'...
 ```
 
+---
+
+Inicie o servidor:
+```
+./manage.py runserver
+
+Performing system checks...
+
+System check identified no issues (0 silenced).
+June 13, 2025 - 10:47:27
+Django version 5.2.2, using settings 'mpc_core.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+```
+
+---
+
+Se preferir executar em Docker (Ubuntu 24.04 + Python 3.12 + Gunicorn):
+
+```bash
+cd docker
+./build_docker.sh
+```
+
+---
 ## Endpoints
 
 ### **Criação de Contrato**: `POST` `/contracts/create/`
@@ -161,6 +210,8 @@ Comando curl para testes de criação de contrato:
 curl -v -X POST http://127.0.0.1:8000/contracts/create/ -H "Content-Type: application/json" -d '{"contract_date":"2023-01-15","contract_amount":20000,"contract_rate":2.3,"customer_cpf":"24926156857","customer_birth_date":"1990-01-01","customer_country":"Brasil","customer_state":"SP","customer_city":"São Paulo","customer_phone":"16997228598","parcels":[{"parcel_due_date":"2025-08-01","parcel_amount":11500},{"parcel_due_date":"2025-09-01","parcel_amount":11500},{"parcel_due_date":"2025-10-01","parcel_amount":11500},{"parcel_due_date":"2025-11-01","parcel_amount":11500}]}'
 ```
 
+---
+
 ### **Listagem de todos os contratos**: `GET` `/contracts/list/all`
 ```bash
 $ curl -L "http://127.0.0.1:8000/contracts/list/all" | jq
@@ -192,12 +243,18 @@ $ curl -L "http://127.0.0.1:8000/contracts/list/all" | jq
 ]
 ```
 
+---
+
 ### **Listagem de contratos com filtro**: `GET` `/contracts/list/`
 
 Os filtros podem ser por `contract_id`, `contract_date`, `customer_cpf`, `customer_state` ou todos eles combinados.
 
     "http://127.0.0.1:8000/contracts/list/?customer_cpf=285.281930-98&customer_state=SP&contract_date=2025"
 
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/list"
+{"error":"No query parameters provided"}
+```
 - Por `customer_cpf`: É necessário um CPF válido e pode-se usar pontos ou traços que serão descartados antes de inserir no banco de dados.
 ```bash
 $ curl -L "http://127.0.0.1:8000/contracts/list/?customer_cpf=285.281930-98" | jq
@@ -271,8 +328,48 @@ $ curl -L "http://127.0.0.1:8000/contracts/list/?contract_date=222" | jq
 ]
 ```
 
+---
+
 ### **Resumo consolidado dos contratos (com filtro)**: `GET` `/contracts/summary/`
 
+Também pode ser utilizados os seguintes filtros: `contract_id`, `contract_date`, `customer_cpf`, `customer_state` ou todos eles combinados.
+
+    "http://127.0.0.1:8000/contracts/summary/?customer_cpf=285.281930-98&customer_state=SP&contract_date=2025"
+
+- Por `customer_cpf`: É necessário um CPF válido e pode-se usar pontos ou traços que serão descartados antes de inserir no banco de dados.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/summary/?customer_cpf=83344265776" | jq
+{
+  "total_contracts_amount": 5000,
+  "total_amount_to_receive": 10000,
+  "total_number_of_contracts": 1,
+  "average_contract_rate": 2
+}
+```
+
+- Por `customer_state`: É necessário uma sigla de estado brasileiro válido. Aceita minúsculas ou maiúsculas.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/summary/?customer_state=SP" | jq
+{
+  "total_contracts_amount": 52000,
+  "total_amount_to_receive": 110000,
+  "total_number_of_contracts": 3,
+  "average_contract_rate": 2.03
+}
+```
+
+- Por `contract_date`: Aceita datas nos formatos `YYYY`, `YYYY-MM`, ou `YYYY-MM-DD`.
+```bash
+$ curl -L "http://127.0.0.1:8000/contracts/summary/?contract_date=2024" | jq
+{
+  "total_contracts_amount": 14000,
+  "total_amount_to_receive": 21000,
+  "total_number_of_contracts": 1,
+  "average_contract_rate": 1.5
+}
+```
+
+---
 
 ### **HealthCheck para o load balancer**: `GET` `/hc/`
 
@@ -290,6 +387,8 @@ Se o arquivo `stop_hc` não existir, retorna `200`
 $ curl -L -v "http://127.0.0.1:8000/hc/"
 health check ok
 ```
+
+---
 
 ### **Teste interno da saúde da instância/aplicação**: `GET` `/hc/test`
 
@@ -331,13 +430,18 @@ curl -L "http://127.0.0.1:8000/hc/test/" | jq
 }
 ```
 
+---
 ## Validações
 
 São feitas validações no backend (mesmo que já exista no frontend) para caso ocorra alguma falha no frontend ou até mesmo um acesso burlando o frontend, o banco de dados não será onerado com consultas inválidas. As validações ocorrem na criação e nas consultas com filtro.
 
+---
+
 #### **- Documento CPF do tomador do empréstimo**
 
 Só é aceito CPF válido. Se o CPF for informado com pontos ou traços, ocorre a normalização (remoção dos pontos ou traços) antes de salvar no banco. A mesma coisa ocorre durante as consultas com filtro.
+
+---
 
 #### **- Localidade Estado do tomador do empréstimo**
 
@@ -351,6 +455,8 @@ $ curl -L -v "http://127.0.0.1:8000/contracts/summary/?customer_state=XX"
 < HTTP/1.1 400 Bad Request
 ["Invalid customer_state code: XX. Must be one of 'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'"]
 ```
+
+---
 
 #### **- Soma das parcelas**
 
@@ -367,21 +473,31 @@ $ curl -v -X POST http://127.0.0.1:8000/contracts/create/ -H "Content-Type: appl
 {"error":"[ErrorDetail(string='The total of parcel amounts must be greater than or equal to the contract amount multiplied by contract rate. In this case, greater than or equal to 46000.0', code='invalid')]"}
 ```
 
+---
+
 #### **- Total de parcelas**
 
 Tem que existir ao menos 1 parcela
+
+---
 
 #### **- Valor das parcelas**
 
 As parcelas podem ter valores diferentes, porém tem que ser maior do que ZERO.
 
+---
+
 #### **- Data das parcelas**
 
 A data das parcelas tem que ser posterior à data do contrato
 
+---
+
 #### **- Valor do contrato**
 
 O valor do contrato tem que ser maior que ZERO.
+
+---
 
 #### **- Taxa de contrato**
 
