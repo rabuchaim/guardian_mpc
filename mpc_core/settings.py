@@ -7,7 +7,7 @@ from datetime import datetime as dt
 
 APP_START_TIME = dt.now()
 
-API_PREFIX = "api/v1/"
+API_PREFIX = ""
 
 HC_PREFIX = ""
 
