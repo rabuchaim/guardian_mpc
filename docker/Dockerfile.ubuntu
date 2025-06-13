@@ -1,0 +1,39 @@
+FROM ubuntu:24.04
+
+LABEL maintainer="Ricardo Abuchaim <ricardoabuchaim@gmail.com"
+
+ENV BUILD_VERSION 0.0.1
+
+ENV DEBIAN_FRONTEND noninteractive
+
+ENV TZ=America/Sao_Paulo
+
+USER root
+
+RUN set -ex \
+    && apt update \
+    && apt install --no-install-recommends --no-install-suggests -y tzdata gunicorn python3 python3-djangorestframework python3-django-filters python3-dateutil \
+    && apt autoremove -y \
+    && apt purge \
+    && apt autoclean \
+    && apt clean \
+    && rm -rf /var/lib/apt/lists \
+    && rm -rf /var/cache/apt \
+    && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1 
+
+ADD guardian-mpc-files.tar.gz /
+
+RUN python3 /server/manage.py makemigrations \
+    && python3 /server/manage.py migrate
+
+ENV DJANGO_SETTINGS_MODULE="mpc_core.settings"
+
+ENV PYTHONPATH="/server"
+
+EXPOSE 8000
+
+WORKDIR /server
+
+CMD ["gunicorn", "-c", "gunicorn.conf.py", "mpc_core.wsgi:application", "--bind", "0.0.0.0:8000"]
+
+STOPSIGNAL SIGKILL
