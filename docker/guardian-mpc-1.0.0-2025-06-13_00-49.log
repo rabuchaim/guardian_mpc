@@ -1,331 +1,0 @@
-#0 building with "default" instance using docker driver
-
-#1 [internal] load build definition from Dockerfile.ubuntu
-#1 transferring dockerfile: 1.01kB done
-#1 DONE 0.0s
-
-#2 [internal] load metadata for docker.io/library/ubuntu:24.04
-#2 DONE 0.6s
-
-#3 [internal] load .dockerignore
-#3 transferring context: 2B done
-#3 DONE 0.0s
-
-#4 [1/5] FROM docker.io/library/ubuntu:24.04@sha256:b59d21599a2b151e23eea5f6602f4af4d7d31c4e236d22bf0b62b86d2e386b8f
-#4 CACHED
-
-#5 [internal] load build context
-#5 transferring context: 9.42kB done
-#5 DONE 0.1s
-
-#6 [2/5] RUN set -ex     && apt update     && apt install --no-install-recommends --no-install-suggests -y tzdata gunicorn python3 python3-djangorestframework python3-django-filters python3-dateutil     && apt autoremove -y     && apt purge     && apt autoclean     && apt clean     && rm -rf /var/lib/apt/lists     && rm -rf /var/cache/apt     && update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
-#6 0.626 + apt update
-#6 0.630 
-#6 0.630 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 0.630 
-#6 0.936 Get:1 http://security.ubuntu.com/ubuntu noble-security InRelease [126 kB]
-#6 1.053 Get:2 http://archive.ubuntu.com/ubuntu noble InRelease [256 kB]
-#6 1.590 Get:3 http://security.ubuntu.com/ubuntu noble-security/multiverse amd64 Packages [22.1 kB]
-#6 1.753 Get:4 http://security.ubuntu.com/ubuntu noble-security/main amd64 Packages [1093 kB]
-#6 2.141 Get:5 http://archive.ubuntu.com/ubuntu noble-updates InRelease [126 kB]
-#6 2.218 Get:6 http://security.ubuntu.com/ubuntu noble-security/restricted amd64 Packages [1442 kB]
-#6 2.376 Get:7 http://security.ubuntu.com/ubuntu noble-security/universe amd64 Packages [1097 kB]
-#6 2.403 Get:8 http://archive.ubuntu.com/ubuntu noble-backports InRelease [126 kB]
-#6 2.679 Get:9 http://archive.ubuntu.com/ubuntu noble/main amd64 Packages [1808 kB]
-#6 3.302 Get:10 http://archive.ubuntu.com/ubuntu noble/restricted amd64 Packages [117 kB]
-#6 3.317 Get:11 http://archive.ubuntu.com/ubuntu noble/universe amd64 Packages [19.3 MB]
-#6 4.577 Get:12 http://archive.ubuntu.com/ubuntu noble/multiverse amd64 Packages [331 kB]
-#6 4.594 Get:13 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 Packages [1400 kB]
-#6 4.680 Get:14 http://archive.ubuntu.com/ubuntu noble-updates/restricted amd64 Packages [1495 kB]
-#6 4.774 Get:15 http://archive.ubuntu.com/ubuntu noble-updates/multiverse amd64 Packages [26.7 kB]
-#6 4.775 Get:16 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 Packages [1418 kB]
-#6 4.866 Get:17 http://archive.ubuntu.com/ubuntu noble-backports/universe amd64 Packages [31.8 kB]
-#6 4.869 Get:18 http://archive.ubuntu.com/ubuntu noble-backports/main amd64 Packages [48.0 kB]
-#6 5.369 Fetched 30.3 MB in 5s (6415 kB/s)
-#6 5.369 Reading package lists...
-#6 6.135 Building dependency tree...
-#6 6.308 Reading state information...
-#6 6.329 2 packages can be upgraded. Run 'apt list --upgradable' to see them.
-#6 6.330 + apt install --no-install-recommends --no-install-suggests -y tzdata gunicorn python3 python3-djangorestframework python3-django-filters python3-dateutil
-#6 6.333 
-#6 6.333 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 6.333 
-#6 6.335 Reading package lists...
-#6 7.097 Building dependency tree...
-#6 7.264 Reading state information...
-#6 7.489 The following additional packages will be installed:
-#6 7.489   fonts-font-awesome fonts-glyphicons-halflings libexpat1 libjs-bootstrap
-#6 7.489   libjs-jquery libjs-prettify libpython3-stdlib libpython3.12-minimal
-#6 7.491   libpython3.12-stdlib libreadline8t64 libsqlite3-0 media-types netbase
-#6 7.491   python3-asgiref python3-django python3-gunicorn python3-minimal
-#6 7.491   python3-pkg-resources python3-setuptools python3-six python3-sqlparse
-#6 7.491   python3-tz python3.12 python3.12-minimal readline-common
-#6 7.494 Suggested packages:
-#6 7.494   python3-pastedeploy python3-setproctitle python3-tornado python3-doc
-#6 7.494   python3-tk python3-venv bpython3 geoip-database-contrib gettext ipython3
-#6 7.494   libgdal20 libsqlite3-mod-spatialite python-django-doc python3-bcrypt
-#6 7.494   python3-flup python3-memcache python3-mysqldb python3-pil python3-psycopg2
-#6 7.494   python3-selenium python3-sqlite python3-yaml python-django-filters-doc
-#6 7.494   python-djangorestframework-doc python-setuptools-doc python-sqlparse-doc
-#6 7.494   python3.12-venv python3.12-doc binutils binfmt-support readline-doc
-#6 7.494 Recommended packages:
-#6 7.494   javascript-common python3-coreapi python3-coreschema python3-django-guardian
-#6 7.494   python3-markdown python3-psycopg2 python3-yaml ca-certificates
-#6 7.582 The following NEW packages will be installed:
-#6 7.582   fonts-font-awesome fonts-glyphicons-halflings gunicorn libexpat1
-#6 7.582   libjs-bootstrap libjs-jquery libjs-prettify libpython3-stdlib
-#6 7.583   libpython3.12-minimal libpython3.12-stdlib libreadline8t64 libsqlite3-0
-#6 7.583   media-types netbase python3 python3-asgiref python3-dateutil python3-django
-#6 7.583   python3-django-filters python3-djangorestframework python3-gunicorn
-#6 7.583   python3-minimal python3-pkg-resources python3-setuptools python3-six
-#6 7.583   python3-sqlparse python3-tz python3.12 python3.12-minimal readline-common
-#6 7.583   tzdata
-#6 8.003 0 upgraded, 31 newly installed, 0 to remove and 2 not upgraded.
-#6 8.003 Need to get 12.6 MB of archives.
-#6 8.003 After this operation, 64.2 MB of additional disk space will be used.
-#6 8.003 Get:1 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-minimal amd64 3.12.3-1ubuntu0.5 [835 kB]
-#6 9.446 Get:2 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libexpat1 amd64 2.6.1-2ubuntu0.3 [88.0 kB]
-#6 9.459 Get:3 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12-minimal amd64 3.12.3-1ubuntu0.5 [2342 kB]
-#6 9.865 Get:4 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-minimal amd64 3.12.3-0ubuntu2 [27.4 kB]
-#6 9.866 Get:5 http://archive.ubuntu.com/ubuntu noble/main amd64 media-types all 10.1.0 [27.5 kB]
-#6 9.869 Get:6 http://archive.ubuntu.com/ubuntu noble/main amd64 netbase all 6.4 [13.1 kB]
-#6 9.869 Get:7 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 tzdata all 2025b-0ubuntu0.24.04.1 [276 kB]
-#6 9.892 Get:8 http://archive.ubuntu.com/ubuntu noble/main amd64 readline-common all 8.2-4build1 [56.5 kB]
-#6 9.897 Get:9 http://archive.ubuntu.com/ubuntu noble/main amd64 libreadline8t64 amd64 8.2-4build1 [153 kB]
-#6 9.909 Get:10 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libsqlite3-0 amd64 3.45.1-1ubuntu2.3 [701 kB]
-#6 9.964 Get:11 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3.12-stdlib amd64 3.12.3-1ubuntu0.5 [2069 kB]
-#6 10.09 Get:12 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3.12 amd64 3.12.3-1ubuntu0.5 [651 kB]
-#6 10.12 Get:13 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 libpython3-stdlib amd64 3.12.3-0ubuntu2 [10.0 kB]
-#6 10.26 Get:14 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3 amd64 3.12.3-0ubuntu2 [23.0 kB]
-#6 10.26 Get:15 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-pkg-resources all 68.1.2-2ubuntu1.2 [168 kB]
-#6 10.26 Get:16 http://archive.ubuntu.com/ubuntu noble/main amd64 fonts-font-awesome all 5.0.10+really4.7.0~dfsg-4.1 [516 kB]
-#6 10.27 Get:17 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 fonts-glyphicons-halflings all 1.009~3.4.1+dfsg-3+deb12u1build0.24.04.1 [119 kB]
-#6 10.27 Get:18 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-setuptools all 68.1.2-2ubuntu1.2 [397 kB]
-#6 10.28 Get:19 http://archive.ubuntu.com/ubuntu noble/universe amd64 python3-gunicorn all 20.1.0-6 [58.5 kB]
-#6 10.29 Get:20 http://archive.ubuntu.com/ubuntu noble/universe amd64 gunicorn all 20.1.0-6 [11.9 kB]
-#6 10.46 Get:21 http://archive.ubuntu.com/ubuntu noble-updates/universe amd64 libjs-bootstrap all 3.4.1+dfsg-3+deb12u1build0.24.04.1 [129 kB]
-#6 10.46 Get:22 http://archive.ubuntu.com/ubuntu noble/main amd64 libjs-jquery all 3.6.1+dfsg+~3.5.14-1 [328 kB]
-#6 10.46 Get:23 http://archive.ubuntu.com/ubuntu noble/universe amd64 libjs-prettify all 2015.12.04+dfsg-1.1 [39.3 kB]
-#6 10.65 Get:24 http://archive.ubuntu.com/ubuntu noble/main amd64 python3-asgiref all 3.7.2-1 [24.8 kB]
-#6 10.65 Get:25 http://archive.ubuntu.com/ubuntu noble/main amd64 python3-six all 1.16.0-4 [12.4 kB]
-#6 10.65 Get:26 http://archive.ubuntu.com/ubuntu noble/main amd64 python3-dateutil all 2.8.2-3ubuntu1 [79.4 kB]
-#6 10.65 Get:27 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-sqlparse all 0.4.4-1ubuntu0.1 [31.8 kB]
-#6 10.65 Get:28 http://archive.ubuntu.com/ubuntu noble-updates/main amd64 python3-django all 3:4.2.11-1ubuntu1.8 [2921 kB]
-#6 10.72 Get:29 http://archive.ubuntu.com/ubuntu noble/universe amd64 python3-django-filters all 23.5-1 [48.6 kB]
-#6 10.72 Get:30 http://archive.ubuntu.com/ubuntu noble/main amd64 python3-tz all 2024.1-2 [31.4 kB]
-#6 10.85 Get:31 http://archive.ubuntu.com/ubuntu noble/universe amd64 python3-djangorestframework all 3.14.0-2 [441 kB]
-#6 10.97 debconf: delaying package configuration, since apt-utils is not installed
-#6 11.00 Fetched 12.6 MB in 3s (3868 kB/s)
-#6 11.04 Selecting previously unselected package libpython3.12-minimal:amd64.
-#6 11.04 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4381 files and directories currently installed.)
-#6 11.04 Preparing to unpack .../libpython3.12-minimal_3.12.3-1ubuntu0.5_amd64.deb ...
-#6 11.05 Unpacking libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.5) ...
-#6 11.15 Selecting previously unselected package libexpat1:amd64.
-#6 11.15 Preparing to unpack .../libexpat1_2.6.1-2ubuntu0.3_amd64.deb ...
-#6 11.16 Unpacking libexpat1:amd64 (2.6.1-2ubuntu0.3) ...
-#6 11.21 Selecting previously unselected package python3.12-minimal.
-#6 11.22 Preparing to unpack .../python3.12-minimal_3.12.3-1ubuntu0.5_amd64.deb ...
-#6 11.22 Unpacking python3.12-minimal (3.12.3-1ubuntu0.5) ...
-#6 11.31 Setting up libpython3.12-minimal:amd64 (3.12.3-1ubuntu0.5) ...
-#6 11.34 Setting up libexpat1:amd64 (2.6.1-2ubuntu0.3) ...
-#6 11.35 Setting up python3.12-minimal (3.12.3-1ubuntu0.5) ...
-#6 12.10 Selecting previously unselected package python3-minimal.
-#6 12.10 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 4700 files and directories currently installed.)
-#6 12.10 Preparing to unpack .../0-python3-minimal_3.12.3-0ubuntu2_amd64.deb ...
-#6 12.11 Unpacking python3-minimal (3.12.3-0ubuntu2) ...
-#6 12.15 Selecting previously unselected package media-types.
-#6 12.15 Preparing to unpack .../1-media-types_10.1.0_all.deb ...
-#6 12.16 Unpacking media-types (10.1.0) ...
-#6 12.20 Selecting previously unselected package netbase.
-#6 12.20 Preparing to unpack .../2-netbase_6.4_all.deb ...
-#6 12.21 Unpacking netbase (6.4) ...
-#6 12.26 Selecting previously unselected package tzdata.
-#6 12.26 Preparing to unpack .../3-tzdata_2025b-0ubuntu0.24.04.1_all.deb ...
-#6 12.27 Unpacking tzdata (2025b-0ubuntu0.24.04.1) ...
-#6 12.38 Selecting previously unselected package readline-common.
-#6 12.38 Preparing to unpack .../4-readline-common_8.2-4build1_all.deb ...
-#6 12.39 Unpacking readline-common (8.2-4build1) ...
-#6 12.44 Selecting previously unselected package libreadline8t64:amd64.
-#6 12.44 Preparing to unpack .../5-libreadline8t64_8.2-4build1_amd64.deb ...
-#6 12.45 Adding 'diversion of /lib/x86_64-linux-gnu/libhistory.so.8 to /lib/x86_64-linux-gnu/libhistory.so.8.usr-is-merged by libreadline8t64'
-#6 12.46 Adding 'diversion of /lib/x86_64-linux-gnu/libhistory.so.8.2 to /lib/x86_64-linux-gnu/libhistory.so.8.2.usr-is-merged by libreadline8t64'
-#6 12.46 Adding 'diversion of /lib/x86_64-linux-gnu/libreadline.so.8 to /lib/x86_64-linux-gnu/libreadline.so.8.usr-is-merged by libreadline8t64'
-#6 12.47 Adding 'diversion of /lib/x86_64-linux-gnu/libreadline.so.8.2 to /lib/x86_64-linux-gnu/libreadline.so.8.2.usr-is-merged by libreadline8t64'
-#6 12.47 Unpacking libreadline8t64:amd64 (8.2-4build1) ...
-#6 12.53 Selecting previously unselected package libsqlite3-0:amd64.
-#6 12.53 Preparing to unpack .../6-libsqlite3-0_3.45.1-1ubuntu2.3_amd64.deb ...
-#6 12.53 Unpacking libsqlite3-0:amd64 (3.45.1-1ubuntu2.3) ...
-#6 12.57 Selecting previously unselected package libpython3.12-stdlib:amd64.
-#6 12.58 Preparing to unpack .../7-libpython3.12-stdlib_3.12.3-1ubuntu0.5_amd64.deb ...
-#6 12.58 Unpacking libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.5) ...
-#6 12.71 Selecting previously unselected package python3.12.
-#6 12.71 Preparing to unpack .../8-python3.12_3.12.3-1ubuntu0.5_amd64.deb ...
-#6 12.72 Unpacking python3.12 (3.12.3-1ubuntu0.5) ...
-#6 12.77 Selecting previously unselected package libpython3-stdlib:amd64.
-#6 12.77 Preparing to unpack .../9-libpython3-stdlib_3.12.3-0ubuntu2_amd64.deb ...
-#6 12.77 Unpacking libpython3-stdlib:amd64 (3.12.3-0ubuntu2) ...
-#6 12.81 Setting up python3-minimal (3.12.3-0ubuntu2) ...
-#6 12.99 Selecting previously unselected package python3.
-#6 12.99 (Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 5706 files and directories currently installed.)
-#6 12.99 Preparing to unpack .../00-python3_3.12.3-0ubuntu2_amd64.deb ...
-#6 13.00 Unpacking python3 (3.12.3-0ubuntu2) ...
-#6 13.04 Selecting previously unselected package python3-pkg-resources.
-#6 13.04 Preparing to unpack .../01-python3-pkg-resources_68.1.2-2ubuntu1.2_all.deb ...
-#6 13.05 Unpacking python3-pkg-resources (68.1.2-2ubuntu1.2) ...
-#6 13.11 Selecting previously unselected package fonts-font-awesome.
-#6 13.11 Preparing to unpack .../02-fonts-font-awesome_5.0.10+really4.7.0~dfsg-4.1_all.deb ...
-#6 13.12 Unpacking fonts-font-awesome (5.0.10+really4.7.0~dfsg-4.1) ...
-#6 13.21 Selecting previously unselected package fonts-glyphicons-halflings.
-#6 13.21 Preparing to unpack .../03-fonts-glyphicons-halflings_1.009~3.4.1+dfsg-3+deb12u1build0.24.04.1_all.deb ...
-#6 13.21 Unpacking fonts-glyphicons-halflings (1.009~3.4.1+dfsg-3+deb12u1build0.24.04.1) ...
-#6 13.26 Selecting previously unselected package python3-setuptools.
-#6 13.26 Preparing to unpack .../04-python3-setuptools_68.1.2-2ubuntu1.2_all.deb ...
-#6 13.27 Unpacking python3-setuptools (68.1.2-2ubuntu1.2) ...
-#6 13.35 Selecting previously unselected package python3-gunicorn.
-#6 13.36 Preparing to unpack .../05-python3-gunicorn_20.1.0-6_all.deb ...
-#6 13.36 Unpacking python3-gunicorn (20.1.0-6) ...
-#6 13.42 Selecting previously unselected package gunicorn.
-#6 13.42 Preparing to unpack .../06-gunicorn_20.1.0-6_all.deb ...
-#6 13.42 Unpacking gunicorn (20.1.0-6) ...
-#6 13.47 Selecting previously unselected package libjs-bootstrap.
-#6 13.47 Preparing to unpack .../07-libjs-bootstrap_3.4.1+dfsg-3+deb12u1build0.24.04.1_all.deb ...
-#6 13.48 Unpacking libjs-bootstrap (3.4.1+dfsg-3+deb12u1build0.24.04.1) ...
-#6 13.54 Selecting previously unselected package libjs-jquery.
-#6 13.55 Preparing to unpack .../08-libjs-jquery_3.6.1+dfsg+~3.5.14-1_all.deb ...
-#6 13.55 Unpacking libjs-jquery (3.6.1+dfsg+~3.5.14-1) ...
-#6 13.60 Selecting previously unselected package libjs-prettify.
-#6 13.60 Preparing to unpack .../09-libjs-prettify_2015.12.04+dfsg-1.1_all.deb ...
-#6 13.60 Unpacking libjs-prettify (2015.12.04+dfsg-1.1) ...
-#6 13.66 Selecting previously unselected package python3-asgiref.
-#6 13.66 Preparing to unpack .../10-python3-asgiref_3.7.2-1_all.deb ...
-#6 13.66 Unpacking python3-asgiref (3.7.2-1) ...
-#6 13.71 Selecting previously unselected package python3-six.
-#6 13.71 Preparing to unpack .../11-python3-six_1.16.0-4_all.deb ...
-#6 13.71 Unpacking python3-six (1.16.0-4) ...
-#6 13.76 Selecting previously unselected package python3-dateutil.
-#6 13.76 Preparing to unpack .../12-python3-dateutil_2.8.2-3ubuntu1_all.deb ...
-#6 13.77 Unpacking python3-dateutil (2.8.2-3ubuntu1) ...
-#6 13.81 Selecting previously unselected package python3-sqlparse.
-#6 13.81 Preparing to unpack .../13-python3-sqlparse_0.4.4-1ubuntu0.1_all.deb ...
-#6 13.82 Unpacking python3-sqlparse (0.4.4-1ubuntu0.1) ...
-#6 13.87 Selecting previously unselected package python3-django.
-#6 13.87 Preparing to unpack .../14-python3-django_3%3a4.2.11-1ubuntu1.8_all.deb ...
-#6 13.88 Unpacking python3-django (3:4.2.11-1ubuntu1.8) ...
-#6 14.64 Selecting previously unselected package python3-django-filters.
-#6 14.64 Preparing to unpack .../15-python3-django-filters_23.5-1_all.deb ...
-#6 14.65 Unpacking python3-django-filters (23.5-1) ...
-#6 14.71 Selecting previously unselected package python3-tz.
-#6 14.72 Preparing to unpack .../16-python3-tz_2024.1-2_all.deb ...
-#6 14.72 Unpacking python3-tz (2024.1-2) ...
-#6 14.77 Selecting previously unselected package python3-djangorestframework.
-#6 14.77 Preparing to unpack .../17-python3-djangorestframework_3.14.0-2_all.deb ...
-#6 14.78 Unpacking python3-djangorestframework (3.14.0-2) ...
-#6 14.87 Setting up media-types (10.1.0) ...
-#6 14.89 Setting up fonts-glyphicons-halflings (1.009~3.4.1+dfsg-3+deb12u1build0.24.04.1) ...
-#6 14.91 Setting up libsqlite3-0:amd64 (3.45.1-1ubuntu2.3) ...
-#6 14.92 Setting up tzdata (2025b-0ubuntu0.24.04.1) ...
-#6 15.00 
-#6 15.00 Current default time zone: 'Etc/UTC'
-#6 15.00 Local time is now:      Fri Jun 13 03:49:31 UTC 2025.
-#6 15.00 Universal Time is now:  Fri Jun 13 03:49:31 UTC 2025.
-#6 15.00 Run 'dpkg-reconfigure tzdata' if you wish to change it.
-#6 15.00 
-#6 15.02 Setting up netbase (6.4) ...
-#6 15.06 Setting up libjs-prettify (2015.12.04+dfsg-1.1) ...
-#6 15.08 Setting up libjs-jquery (3.6.1+dfsg+~3.5.14-1) ...
-#6 15.10 Setting up readline-common (8.2-4build1) ...
-#6 15.11 Setting up fonts-font-awesome (5.0.10+really4.7.0~dfsg-4.1) ...
-#6 15.13 Setting up libjs-bootstrap (3.4.1+dfsg-3+deb12u1build0.24.04.1) ...
-#6 15.15 Setting up libreadline8t64:amd64 (8.2-4build1) ...
-#6 15.17 Setting up libpython3.12-stdlib:amd64 (3.12.3-1ubuntu0.5) ...
-#6 15.19 Setting up python3.12 (3.12.3-1ubuntu0.5) ...
-#6 15.97 Setting up libpython3-stdlib:amd64 (3.12.3-0ubuntu2) ...
-#6 16.00 Setting up python3 (3.12.3-0ubuntu2) ...
-#6 16.10 Setting up python3-tz (2024.1-2) ...
-#6 16.22 Setting up python3-six (1.16.0-4) ...
-#6 16.32 Setting up python3-sqlparse (0.4.4-1ubuntu0.1) ...
-#6 16.45 Setting up python3-dateutil (2.8.2-3ubuntu1) ...
-#6 16.59 Setting up python3-asgiref (3.7.2-1) ...
-#6 16.70 Setting up python3-pkg-resources (68.1.2-2ubuntu1.2) ...
-#6 16.90 Setting up python3-django (3:4.2.11-1ubuntu1.8) ...
-#6 17.97 Setting up python3-setuptools (68.1.2-2ubuntu1.2) ...
-#6 18.39 Setting up python3-djangorestframework (3.14.0-2) ...
-#6 18.63 Setting up python3-gunicorn (20.1.0-6) ...
-#6 18.82 Setting up python3-django-filters (23.5-1) ...
-#6 18.98 Setting up gunicorn (20.1.0-6) ...
-#6 19.05 Processing triggers for libc-bin (2.39-0ubuntu8.4) ...
-#6 19.17 + apt autoremove -y
-#6 19.17 
-#6 19.17 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 19.17 
-#6 19.17 Reading package lists...
-#6 19.96 Building dependency tree...
-#6 20.16 Reading state information...
-#6 20.41 0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
-#6 20.41 + apt purge
-#6 20.41 
-#6 20.41 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 20.41 
-#6 20.42 Reading package lists...
-#6 21.19 Building dependency tree...
-#6 21.36 Reading state information...
-#6 21.61 0 upgraded, 0 newly installed, 0 to remove and 2 not upgraded.
-#6 21.61 + apt autoclean
-#6 21.61 
-#6 21.61 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 21.61 
-#6 21.61 Reading package lists...
-#6 22.37 Building dependency tree...
-#6 22.55 Reading state information...
-#6 22.57 + apt clean
-#6 22.57 
-#6 22.57 WARNING: apt does not have a stable CLI interface. Use with caution in scripts.
-#6 22.57 
-#6 22.57 + rm -rf /var/lib/apt/lists
-#6 22.58 + rm -rf /var/cache/apt
-#6 22.58 + update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.12 1
-#6 22.60 update-alternatives: using /usr/bin/python3.12 to provide /usr/bin/python3 (python3) in auto mode
-#6 DONE 22.7s
-
-#7 [3/5] ADD guardian-mpc-files.tar.gz /
-#7 DONE 0.1s
-
-#8 [4/5] RUN python3 /server/manage.py makemigrations     && python3 /server/manage.py migrate
-#8 0.611 Migrations for 'mpc_contracts':
-#8 0.611   server/mpc_contracts/migrations/0001_initial.py
-#8 0.611     - Create model Contract
-#8 0.611     - Create model Parcel
-#8 0.980 Operations to perform:
-#8 0.980   Apply all migrations: auth, contenttypes, mpc_contracts, sessions
-#8 0.980 Running migrations:
-#8 0.980   Applying contenttypes.0001_initial... OK
-#8 1.014   Applying contenttypes.0002_remove_content_type_name... OK
-#8 1.045   Applying auth.0001_initial... OK
-#8 1.130   Applying auth.0002_alter_permission_name_max_length... OK
-#8 1.169   Applying auth.0003_alter_user_email_max_length... OK
-#8 1.203   Applying auth.0004_alter_user_username_opts... OK
-#8 1.228   Applying auth.0005_alter_user_last_login_null... OK
-#8 1.270   Applying auth.0006_require_contenttypes_0002... OK
-#8 1.292   Applying auth.0007_alter_validators_add_error_messages... OK
-#8 1.321   Applying auth.0008_alter_user_username_max_length... OK
-#8 1.349   Applying auth.0009_alter_user_last_name_max_length... OK
-#8 1.375   Applying auth.0010_alter_group_name_max_length... OK
-#8 1.404   Applying auth.0011_update_proxy_permissions... OK
-#8 1.432   Applying auth.0012_alter_user_first_name_max_length... OK
-#8 1.459   Applying mpc_contracts.0001_initial... OK
-#8 1.504   Applying sessions.0001_initial... OK
-#8 DONE 1.8s
-
-#9 [5/5] WORKDIR /server
-#9 DONE 0.1s
-
-#10 exporting to image
-#10 exporting layers
-#10 exporting layers 1.2s done
-#10 writing image sha256:0f4d35c46d641074a19dc7772b04a7121ff468d09db5d7b34e8b450c7f9c3c3a done
-#10 naming to docker.io/library/guardian-mpc:1.0.0 0.0s done
-#10 DONE 1.2s
-
- [33m2 warnings found (use docker --debug to expand):
-[0m - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 5)
- - LegacyKeyValueFormat: "ENV key=value" should be used instead of legacy "ENV key value" format (line 7)
