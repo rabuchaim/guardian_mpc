@@ -7,6 +7,10 @@ from datetime import datetime as dt
 
 APP_START_TIME = dt.now()
 
+API_PREFIX = "api/v1/"
+
+HC_PREFIX = ""
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = "89@j=*y-4n^^ee*%!xsbmqcsq-s49te4o%-(0=8@8=ixf!2jj("

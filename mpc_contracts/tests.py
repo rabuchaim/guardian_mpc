@@ -48,7 +48,6 @@ class ContractsTestCase(APITestCase):
                     "parcel_due_date":(dt.strptime(str(self.contract_data['contract_date']),"%Y-%m-%d").date() + relativedelta(months=I+1)).strftime('%Y-%m-%d')
                 }
             )
-        
         self.contract_data_bulk = [
             {
                 "contract_date":"2024-12-01",
