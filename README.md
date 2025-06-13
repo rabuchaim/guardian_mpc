@@ -14,6 +14,7 @@ Crie um ambiente virtual do Python3:
 python3 -m venv python-venv
 ```
 > Se ocorrer algum erro na criação do ambiente virtual você deve instalar o pacote python3-venv do seu sistema operacional com `apt install python3-venv` ou `yum install python3-venv`
+
 Ative o ambiente virtual:
 ```
 source python-venv/bin/activate
@@ -152,9 +153,29 @@ Só é aceito CPF válido. Se o CPF for informado com pontos ou traços, ocorre 
 
 Só aceita siglas válidas de estados brasileiros. Se informado em letras minúsculas, ocorre a normalização para maiúsculas.
 
+Exemplo:
+
+```bash
+$ curl -L -v "http://127.0.0.1:8000/contracts/summary/?customer_state=XX"
+
+< HTTP/1.1 400 Bad Request
+["Invalid customer_state code: XX. Must be one of 'AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG','PA','PB','PR','PE','PI','RJ','RN','RS','RO','RR','SC','SP','SE','TO'"]
+```
+
 #### **- Soma das parcelas**
 
 A soma do valor de todas as parcelas tem que ser igual ou superior ao valor do contrato multiplicado pela taxa de contrato. 
+
+Exemplo: 
+```bash
+$ curl -v -X POST http://127.0.0.1:8000/contracts/create/ -H "Content-Type: application/json" -d '{"contract_date":"2023-01-15","contract_amount
+":20000,"contract_rate":2.3,"customer_cpf":"24926156857","customer_birth_date":"1990-01-01","customer_country":"Brasil","customer_state":"SP","customer_city":"São Paulo","customer_phone":"
+16997228598","parcels":[{"parcel_due_date":"2025-08-01","parcel_amount":11500},{"parcel_due_date":"2025-09-01","parcel_amount":11500},{"parcel_due_date":"2025-10-01","parcel_amount":11500}
+,{"parcel_due_date":"2025-11-01","parcel_amount":10500}]}'
+
+< HTTP/1.1 400 Bad Request
+{"error":"[ErrorDetail(string='The total of parcel amounts must be greater than or equal to the contract amount multiplied by contract rate. In this case, greater than or equal to 46000.0', code='invalid')]"}
+```
 
 #### **- Total de parcelas**
 
