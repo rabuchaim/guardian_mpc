@@ -1,0 +1,18 @@
+{
+   "url": "http://127.0.0.1:8000/hc/",
+   "method": "GET",
+   "timeout": 1,
+   "success_status_codes": [
+      200,
+      201,
+      202,
+      204
+   ],
+   "user_agent": "StressAnAPI v1.0.2",
+   "start_interval": 0.00001,
+   "start_burst": 10,
+   "start_threads": 1,
+   "cpu_affinity": [
+      -1
+   ]
+}
